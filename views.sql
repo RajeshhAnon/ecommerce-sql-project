@@ -1,0 +1,3 @@
+CREATE VIEW UserOrderSummary AS SELECT u.UserName, COUNT(o.OrderID) AS TotalOrders FROM Users u LEFT JOIN Orders o ON u.UserID = o.UserID GROUP BY u.UserID;
+CREATE VIEW ProductSales AS SELECT p.Name, SUM(oi.Quantity) AS QuantitySold, SUM(oi.Quantity * p.Price) AS Revenue FROM Products p JOIN OrderItems oi ON p.ProductID = oi.ProductID GROUP BY p.ProductID;
+CREATE VIEW OrderDetails AS SELECT o.OrderID, u.UserName, p.Name AS Product, oi.Quantity, p.Price, (oi.Quantity * p.Price) AS Total FROM Orders o JOIN Users u ON o.UserID = u.UserID JOIN OrderItems oi ON o.OrderID = oi.OrderID JOIN Products p ON oi.ProductID = p.ProductID;

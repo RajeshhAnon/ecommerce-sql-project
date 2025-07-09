@@ -1,0 +1,10 @@
+SELECT * FROM Users;
+SELECT * FROM Products;
+SELECT o.OrderID, u.UserName, o.OrderDate FROM Orders o JOIN Users u ON o.UserID = u.UserID;
+SELECT u.UserName, COUNT(o.OrderID) AS TotalOrders FROM Users u LEFT JOIN Orders o ON u.UserID = o.UserID GROUP BY u.UserID;
+SELECT o.OrderID, SUM(oi.Quantity * p.Price) AS OrderValue FROM Orders o JOIN OrderItems oi ON o.OrderID = oi.OrderID JOIN Products p ON oi.ProductID = p.ProductID GROUP BY o.OrderID;
+SELECT o.OrderID, u.UserName, p.Name AS Product, oi.Quantity, p.Price,(oi.Quantity * p.Price) AS Total FROM Orders o JOIN Users u ON o.UserID = u.UserID JOIN OrderItems oi ON o.OrderID = oi.OrderID JOIN Products p ON oi.ProductID = p.ProductID;
+SELECT p.Name, SUM(oi.Quantity) AS TotalSold FROM Products p JOIN OrderItems oi ON p.ProductID = oi.ProductID GROUP BY p.ProductID ORDER BY TotalSold DESC;
+SELECT * FROM Products WHERE ProductID NOT IN (SELECT DISTINCT ProductID FROM OrderItems);
+SELECT PaymentMethod, COUNT(*) AS TotalPayments, SUM(Amount) AS TotalRevenue FROM Payments GROUP BY PaymentMethod;
+SELECT OrderDate, COUNT(*) AS OrdersPlaced FROM Orders GROUP BY OrderDate ORDER BY OrderDate;
